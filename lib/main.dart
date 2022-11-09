@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         FormPage.routeName: (context) => FormPage(
               link: ModalRoute.of(context)?.settings.arguments as String,
             ),
-        HomePage.routeName: (context) => HomePage(),
+        HomePage.routeName: (context) => const HomePage(),
       },
     );
   }
