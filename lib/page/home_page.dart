@@ -2,10 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:patrol_app/page/form_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/home-page';
-  final MobileScannerController cameraController = MobileScannerController();
+
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final MobileScannerController cameraController = MobileScannerController();
+
+  @override
+  void dispose() {
+    cameraController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (!cameraController.isStarting) {
+      cameraController.start();
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +61,13 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    IconButton(
+                        icon: const Icon(Icons.refresh),
+                        iconSize: 32.0,
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, HomePage.routeName, (route) => false);
+                        }),
                     IconButton(
                       icon: ValueListenableBuilder(
                         valueListenable: cameraController.torchState,

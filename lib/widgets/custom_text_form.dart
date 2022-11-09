@@ -24,6 +24,12 @@ class CustomTextForm extends StatelessWidget {
             height: 6,
           ),
           TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Silahkan diisi";
+              }
+              return null;
+            },
             controller: controller,
             decoration: InputDecoration(
               hintText: "Silahkan isi jawaban",
