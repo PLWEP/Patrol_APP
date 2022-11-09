@@ -72,6 +72,9 @@ class _HomePageState extends State<HomePage> {
                             : const Icon(Icons.flash_off),
                         iconSize: 32.0,
                         onPressed: () {
+                          setState(() {
+                            flashStatus = !flashStatus;
+                          });
                           cameraController!.toggleFlash();
                         }),
                     IconButton(
@@ -86,6 +89,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                       iconSize: 32.0,
                       onPressed: () {
+                        setState(() {
+                          cameraStatus = !cameraStatus;
+                        });
                         cameraController!.flipCamera();
                       },
                     ),
