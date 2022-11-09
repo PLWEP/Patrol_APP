@@ -51,59 +51,63 @@ class FormPage extends StatelessWidget {
               } else if (state.state == ResultState.hasData) {
                 final DataRuangan dataRuangan = state.result.data[0];
 
-                return ListView(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 30),
-                      child: Text(
-                        dataRuangan.name,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                return Container(
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(5),
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 30),
+                        child: Text(
+                          dataRuangan.name,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    CustomTextForm(
-                      controller: textController1,
-                      title: dataRuangan.pertanyaan1,
-                    ),
-                    CustomTextForm(
-                      controller: textController2,
-                      title: dataRuangan.pertanyaan2,
-                    ),
-                    CustomTextForm(
-                      controller: textController3,
-                      title: dataRuangan.pertanyaan3,
-                    ),
-                    CustomTextForm(
-                      controller: textController4,
-                      title: dataRuangan.pertanyaan4,
-                    ),
-                    CustomTextForm(
-                      controller: textController5,
-                      title: dataRuangan.pertanyaan5,
-                    ),
-                    CustomTextForm(
-                      controller: textController6,
-                      title: dataRuangan.pertanyaan6,
-                    ),
-                    CustomTextForm(
-                      controller: textController7,
-                      title: dataRuangan.pertanyaan7,
-                    ),
-                    CustomTextForm(
-                      controller: textController8,
-                      title: dataRuangan.pertanyaan8,
-                    ),
-                    CustomTextForm(
-                      controller: textController9,
-                      title: dataRuangan.pertanyaan9,
-                    ),
-                    CustomTextForm(
-                      controller: textController10,
-                      title: dataRuangan.pertanyaan10,
-                    ),
-                  ],
+                      CustomTextForm(
+                        controller: textController1,
+                        title: dataRuangan.pertanyaan1,
+                      ),
+                      CustomTextForm(
+                        controller: textController2,
+                        title: dataRuangan.pertanyaan2,
+                      ),
+                      CustomTextForm(
+                        controller: textController3,
+                        title: dataRuangan.pertanyaan3,
+                      ),
+                      CustomTextForm(
+                        controller: textController4,
+                        title: dataRuangan.pertanyaan4,
+                      ),
+                      CustomTextForm(
+                        controller: textController5,
+                        title: dataRuangan.pertanyaan5,
+                      ),
+                      CustomTextForm(
+                        controller: textController6,
+                        title: dataRuangan.pertanyaan6,
+                      ),
+                      CustomTextForm(
+                        controller: textController7,
+                        title: dataRuangan.pertanyaan7,
+                      ),
+                      CustomTextForm(
+                        controller: textController8,
+                        title: dataRuangan.pertanyaan8,
+                      ),
+                      CustomTextForm(
+                        controller: textController9,
+                        title: dataRuangan.pertanyaan9,
+                      ),
+                      CustomTextForm(
+                        controller: textController10,
+                        title: dataRuangan.pertanyaan10,
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return const Material(child: Text('Terjadi Kesalahan'));

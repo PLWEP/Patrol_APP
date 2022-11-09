@@ -26,14 +26,12 @@ class CustomTextForm extends StatelessWidget {
           TextFormField(
             controller: controller,
             decoration: InputDecoration(
-              hintText: "Silahkan isi pertanyaan",
+              hintText: "Silahkan isi jawaban",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(
-                  16,
-                ),
+                borderRadius: BorderRadius.circular(5),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(5),
               ),
             ),
           ),
