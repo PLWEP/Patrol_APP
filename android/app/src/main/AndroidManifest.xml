@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.patrol_app">
    <application
-        android:label="patrol_app"
+        android:label="Patrol"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
