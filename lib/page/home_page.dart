@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:patrol_app/page/form_page.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   static const routeName = '/home-page';
+  final MobileScannerController cameraController = MobileScannerController();
 
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final GlobalKey qrKey = GlobalKey();
-  QRViewController? cameraController;
-  bool flashStatus = false;
-  bool cameraStatus = false;
-
-  @override
-  void dispose() {
-    cameraController?.dispose();
-    super.dispose();
-  }
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +25,14 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: 300,
                 height: 300,
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: (QRViewController controller) {
-                    cameraController = controller;
-                    controller.scannedDataStream.listen((value) {
-                      cameraController!.pauseCamera();
+                child: MobileScanner(
+                  allowDuplicates: false,
+                  controller: cameraController,
+                  onDetect: (barcode, args) {
+                    if (barcode.rawValue != null) {
                       Navigator.pushNamed(context, FormPage.routeName,
-                          arguments: value.code);
-                    });
+                          arguments: barcode.rawValue);
+                    }
                   },
                 ),
               ),
@@ -58,42 +42,50 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                        icon: const Icon(Icons.refresh),
-                        iconSize: 32.0,
-                        onPressed: () {
-                          cameraController!.resumeCamera();
-                        }),
-                    IconButton(
-                        icon: flashStatus
-                            ? const Icon(
-                                Icons.flash_on,
-                                color: Colors.amber,
-                              )
-                            : const Icon(Icons.flash_off),
-                        iconSize: 32.0,
-                        onPressed: () {
-                          setState(() {
-                            flashStatus = !flashStatus;
-                          });
-                          cameraController!.toggleFlash();
-                        }),
-                    IconButton(
-                      icon: cameraStatus
-                          ? const Icon(
-                              Icons.camera_front,
-                              color: Colors.black,
-                            )
-                          : const Icon(
-                              Icons.camera_rear,
-                              color: Colors.black,
-                            ),
+                      icon: const Icon(Icons.refresh),
                       iconSize: 32.0,
                       onPressed: () {
-                        setState(() {
-                          cameraStatus = !cameraStatus;
-                        });
-                        cameraController!.flipCamera();
+                        cameraController.dispose();
+                        Navigator.pushReplacementNamed(
+                            context, HomePage.routeName);
                       },
+                    ),
+                    IconButton(
+                      icon: ValueListenableBuilder(
+                        valueListenable: cameraController.torchState,
+                        builder: (context, state, child) {
+                          switch (state) {
+                            case TorchState.off:
+                              return const Icon(Icons.flash_off,
+                                  color: Colors.black);
+                            case TorchState.on:
+                              return const Icon(Icons.flash_on,
+                                  color: Colors.blue);
+                          }
+                        },
+                      ),
+                      iconSize: 32.0,
+                      onPressed: () => cameraController.toggleTorch(),
+                    ),
+                    IconButton(
+                      icon: ValueListenableBuilder(
+                        valueListenable: cameraController.cameraFacingState,
+                        builder: (context, state, child) {
+                          switch (state) {
+                            case CameraFacing.front:
+                              return const Icon(
+                                Icons.camera_front,
+                                color: Colors.black,
+                              );
+                            case CameraFacing.back:
+                              return const Icon(
+                                Icons.camera_rear,
+                                color: Colors.black,
+                              );
+                          }
+                        },
+                      ),
+                      onPressed: () => cameraController.switchCamera(),
                     ),
                   ],
                 ),
